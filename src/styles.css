@@ -7,13 +7,13 @@
 }
 
 a {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: rgb(236, 238, 253);
-  text-shadow: rgba(147, 175, 250, 0.877) 1px 1px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(255, 255, 255);
+  text-shadow: rgb(241, 19, 19) 1px 1px;
   text-decoration: none;
   font-size: 0.8rem;
   font-style: italic;
-  font-weight: bold;
+  font-weight: 600;
   padding: 0.4rem;
 }
 
@@ -82,6 +82,7 @@ button {
   display: block;
   margin-top: auto;
   margin-bottom: 0;
+  padding: 0.2rem;
   background-color: rgba(13, 68, 70, 0.596);
 }
 
