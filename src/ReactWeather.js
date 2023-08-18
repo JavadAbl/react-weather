@@ -1,8 +1,11 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
 
-const BASE_URL =
-  "https://api.weatherapi.com/v1/current.json?key=af9730cd2c8d452e9d6121515231408&aqi=no&q=";
+const GEO_URL =
+  "https://geocoding-api.open-meteo.com/v1/search?count=1&name=";
+
+  const CURRENT_URL =
+  "https://geocoding-api.open-meteo.com/v1/search?count=1&name=";
 
 export default function ReactWeather() {
   const [cityName, setCityName] = useState("");
@@ -21,13 +24,21 @@ export default function ReactWeather() {
           setData({});
           setError(() => false);
           setIsLoading(() => true);
-          const res = await fetch(BASE_URL + cityName);
 
-          if (!res.ok) throw new Error("An error happens during get data..");
+          const resGeo = await fetch(GEO_URL + cityName);
+          if (!resGeo.ok) throw new Error("An error happens during get data..");
+          const geoData = await res.json();
+          if (geoData.response === "false") throw new Error("City not found!");
+
+
+          const resCurrent = await fetch(BASE_URL + cityName);
+          if (!resCurrent.ok) throw new Error("An error happens during get data..");
           const mData = await res.json();
-
           if (mData.response === "false") throw new Error("City not found!");
+
           setData(mData);
+
+
 
           console.log(mData);
         } catch (e) {
