@@ -2,9 +2,7 @@ import "./styles.css";
 import { useEffect, useState } from "react";
 
 const GEO_URL = "https://geocoding-api.open-meteo.com/v1/search?count=1&name=";
-let latitude = "";
-let longitude = "";
-const CURRENT_URL = `https://api.open-meteo.com/v1/forecast?hourly=relativehumidity_2m,visibility&current_weather=true&forecast_days=1&latitude=${latitude}&longitude=${longitude}`;
+const CURRENT_URL = `https://api.open-meteo.com/v1/forecast?hourly=relativehumidity_2m,visibility&current_weather=true&forecast_days=1&`;
 
 export default function ReactWeather() {
     const [cityName, setCityName] = useState("");
@@ -21,20 +19,21 @@ export default function ReactWeather() {
             async function getData() {
                 try {
                     setData({});
-                    setError(() => false);
-                    setIsLoading(() => true);
+                    setError( "");
+                    setIsLoading( true);
 
                     const resGeo = await fetch(GEO_URL + cityName);
                     if (!resGeo.ok) throw new Error("An error happens during get data..");
                     const geoData = await resGeo.json();
                     if (geoData.response === "false") throw new Error("City not found!");
-                    latitude = geoData.results[0].latitude;
-                    longitude = geoData.results[0].longitude;
+                  let  latitude = geoData.results[0].latitude;
+                  let  longitude = geoData.results[0].longitude;
 
-                    const resCurrent = await fetch(CURRENT_URL);
+                    const resCurrent = await fetch(CURRENT_URL
+                        +`latitude=${latitude}&longitude=${longitude}`);
                     if (!resCurrent.ok)
                         throw new Error("An error happens during get data..");
-                    const mData = await res.json();
+                    const mData = await resCurrent.json();
                     if (mData.response === "false") throw new Error("City not found!");
 
                     setData(mData);
@@ -152,7 +151,7 @@ function Content({ data, isLoading, error }) {
 }
 
 function Result({ data }) {
-    const currentTime = data.visibility.time;
+    const currentTime = data.current_weather.time;
     let indexTime;
     for (var i = 0; i < data.hourly.time.length; i++) {
         if (data.hourly.time[i] === currentTime) indexTime = i;
@@ -178,6 +177,7 @@ function Result({ data }) {
                 <span className="result-property">Wind Degree: </span>
                 <span className="result-value">
           {data.current_weather.winddirection}
+                    <sup>o</sup>
         </span>
             </div>
             <hr />
@@ -191,7 +191,7 @@ function Result({ data }) {
             <div className="result-row">
                 <span className="result-property">Visibility: </span>
                 <span className="result-value">
-          {data.hourly.visibility[indexTime]} km
+          {data.hourly.visibility[indexTime]} m
         </span>
             </div>
         </div>
