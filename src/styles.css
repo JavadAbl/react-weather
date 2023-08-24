@@ -5,6 +5,9 @@
   margin: 0;
   padding: 0;
 }
+option{
+  font-family: Arial, serif;
+}
 
 a {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -33,7 +36,8 @@ a {
 }
 
 label {
-  padding: 0.5rem;
+  padding: 6.5rem;
+  margin: 1rem 0 4rem 0;
   font-size: 1rem;
   font-weight: 300;
 }
