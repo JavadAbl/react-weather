@@ -5,7 +5,15 @@
   margin: 0;
   padding: 0;
 }
+
+select{
+  width: 20em;
+  background-color: red;
+
+}
+
 option{
+
   font-family: Arial, serif;
 }
 
