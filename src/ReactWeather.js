@@ -135,6 +135,9 @@ function Input({ inputHandler }) {
         placeholder="Enter city name.."
         name="city"
         value={cityValue}
+        onChange={(e) => {
+          setCityValue(e.value);
+        }}
       />
       <br />
       or select from list
@@ -177,10 +180,17 @@ function Content({ data, isLoading, error }) {
 }
 
 function Result({ data }) {
-  const currentTime = data.current_weather.time;
+  // const currentTime = data.current_weather.time;
+  const currentTime = new Date(data.current_weather.time);
+
   let indexTime;
   for (var i = 0; i < data.hourly.time.length; i++) {
-    if (data.hourly.time[i] === currentTime) indexTime = i;
+    const dataTime = new Date(data.hourly.time[i]);
+    if (
+      dataTime.getHours() == currentTime.getHours() &&
+      dataTime.getDay() == currentTime.getDay()
+    )
+      indexTime = i;
   }
   return (
     <div className="result">

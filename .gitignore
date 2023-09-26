@@ -1,4 +1,5 @@
 node_modules
+.codesandbox
 .DS_*
 *.log
 logs
